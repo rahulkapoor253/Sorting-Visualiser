@@ -3,7 +3,25 @@
     margin-left: 100px;
     /* top: 100px; */
   }
+
+  .array-bar {
+    width: 4px;
+    display: inline-block;
+    margin: 0 1px;
+    color: transparent;
+  }
   
+  .top-container {
+      margin-bottom: 8px;
+  }
+
   .btn {
-      color: red;
+      padding: 4px;
+      margin-top: 8px;
+  }
+
+  .btn-new {
+      padding: 4px;
+      margin-top: 8px;
+      margin-left: 8px;
   }
