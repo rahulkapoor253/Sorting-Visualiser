@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import './SortingVisualiser.css';
 import {getMergeSortArray} from '../Sorting/SortingAlgorithms';
 import {getBubbleSortArray} from '../Sorting/BubbleAlgo';
+import {getQuickSortArray} from '../Sorting/QuickSortAlgo';
 
 const PRIMARY_COLOR = 'turquoise';
 const SECONDARY_COLOR = 'black';
 const MIN_BAR_HEIGHT = 10;
 const MAX_BAR_HEIGHT = 700;
-const TIMEOUT_TIMER_MS = 2;
+const TIMEOUT_TIMER_MS = 1;
 const TIMEOUT_TIMER_MS_BUBBLE_SORT = 1;
+const TIMEOUT_TIMER_MS_QUICK_SORT = 1;
 
 class SortingVisualiser extends Component {
 
@@ -29,7 +31,7 @@ generateRandomNumber = () => {
 
 getRandomNumbers = () => {
    const arr = [];
-    for(let x=0;x<200;x++) {
+    for(let x=0;x<100;x++) {
         arr.push(this.generateRandomNumber());
    } 
 
@@ -43,6 +45,46 @@ getRandomNumbers = () => {
 componentDidMount() {
     //fill the state with random numbers;
     this.getRandomNumbers();
+}
+
+handleQuickVisualise = () => {
+    console.log("animation started");
+    const animations = getQuickSortArray(this.state.dataArray);
+    //console.log("quick sort : " + animations);
+    const arrayBars = document.getElementsByClassName("array-bar");
+    for(let x=0;x<animations.length;x++) {
+        //first : color change
+        //second : color normal
+        //third : height change
+        //fourth : height change
+        //fifth : just height change
+        //sixth : just height change
+        const isColorChange = (x % 4) < 2;
+        if(isColorChange) {
+            
+            const [barStartId, barEndId] = animations[x];
+            console.log(barStartId + ":" + barEndId);
+            const barStartIdStyle = arrayBars[barStartId].style;
+            const barEndIdStyle = arrayBars[barEndId].style;
+
+            //change color when the set of 3 in animation appears first time;
+            const color = (x % 4) === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+            //console.log(color);
+            setTimeout(() => {
+                barStartIdStyle.backgroundColor = color;
+                barEndIdStyle.backgroundColor = color;
+            }, x * TIMEOUT_TIMER_MS);
+
+        }
+        else {
+            setTimeout(() => {
+                const [barId, newHeight] = animations[x];
+                const barIdStyle = arrayBars[barId].style;
+                barIdStyle.height = `${newHeight}px`;
+            }, x * TIMEOUT_TIMER_MS_QUICK_SORT);
+        }
+    }
+
 }
 
 handleBubbleVisualise = () => {
@@ -61,7 +103,6 @@ handleBubbleVisualise = () => {
             const barStartIdStyle = arrayBars[barStartId].style;
             const barEndIdStyle = arrayBars[barEndId].style;
 
-            //change color when the set of 3 in animation appears first time;
             const color = (x % 4) === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
             //console.log(color);
             setTimeout(() => {
@@ -126,6 +167,7 @@ render() {
         <div className="top-container">
             <button onClick={this.handleVisualise} className="btn">Merge Sorting</button>
             <button onClick={this.handleBubbleVisualise} className="btn btn-left">Bubble Sorting</button>
+            <button onClick={this.handleQuickVisualise} className="btn btn-left">Quick Sorting</button>
             <button className="btn-new" onClick={this.getRandomNumbers}>Generate new array</button>
         </div>
 
