@@ -3,11 +3,12 @@ import './SortingVisualiser.css';
 import {getMergeSortArray} from '../Sorting/SortingAlgorithms';
 import {getBubbleSortArray} from '../Sorting/BubbleAlgo';
 import {getQuickSortArray} from '../Sorting/QuickSortAlgo';
-
+import ProgressBar from './ProgressBar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, ButtonGroup } from 'reactstrap';
 const PRIMARY_COLOR = 'turquoise';
-const SECONDARY_COLOR = 'black';
+const SECONDARY_COLOR = 'red';
 const MIN_BAR_HEIGHT = 10;
-const MAX_BAR_HEIGHT = 700;
 const TIMEOUT_TIMER_MS = 1;
 const TIMEOUT_TIMER_MS_BUBBLE_SORT = 1;
 const TIMEOUT_TIMER_MS_QUICK_SORT = 1;
@@ -19,19 +20,35 @@ super(props);
 
 this.state = {
     dataArray : [],
+    percent : 0,
+    barCount : 200,
+    maxBarHeght : 450
 }
 
+}
+
+increment = () => {
+    const val = this.state.percent >= 100 ? 0 : this.state.percent + 25;
+    this.setState(() => ({
+      percent: val,
+      maxBarHeght : 450 + val*2,
+    }));
+
+    //call random array generate
+    this.getRandomNumbers();
+    console.log(this.state.maxBarHeght);
 }
 
 generateRandomNumber = () => {
-    const number = Math.floor(MIN_BAR_HEIGHT + Math.random()*(MAX_BAR_HEIGHT-MIN_BAR_HEIGHT));
+    const number = Math.floor(MIN_BAR_HEIGHT + Math.random()*(this.state.maxBarHeght - MIN_BAR_HEIGHT));
     //console.log(number);
     return number;
 }
 
 getRandomNumbers = () => {
    const arr = [];
-    for(let x=0;x<100;x++) {
+
+    for(let x=0;x<this.state.barCount;x++) {
         arr.push(this.generateRandomNumber());
    } 
 
@@ -164,12 +181,16 @@ render() {
     return (
         <div className="array-container">
             
-        <div className="top-container">
-            <button onClick={this.handleVisualise} className="btn">Merge Sorting</button>
-            <button onClick={this.handleBubbleVisualise} className="btn btn-left">Bubble Sorting</button>
-            <button onClick={this.handleQuickVisualise} className="btn btn-left">Quick Sorting</button>
-            <button className="btn-new" onClick={this.getRandomNumbers}>Generate new array</button>
-        </div>
+        <ButtonGroup className="btn-group">
+            <Button onClick={this.handleVisualise} className="btn">Merge Sorting</Button>
+            <Button onClick={this.handleBubbleVisualise} className="btn btn-left">Bubble Sorting</Button>
+            <Button onClick={this.handleQuickVisualise} className="btn btn-left">Quick Sorting</Button>
+            <Button className="btn-new" onClick={this.getRandomNumbers}>Generate new array</Button>
+        </ButtonGroup>
+
+        <Button color="info" onClick={this.increment}>Array Bars</Button>
+
+            <ProgressBar data={this.state.percent}/>
 
             {dataArray.map((val, idx) => (
                  <div

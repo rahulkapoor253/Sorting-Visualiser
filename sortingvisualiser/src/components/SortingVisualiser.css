@@ -11,21 +11,6 @@
     color: transparent;
   }
   
-  .top-container {
-      margin-bottom: 8px;
-  }
-
-  .btn {
-      padding: 4px;
-      margin-top: 8px;
-  }
-
-  .btn-left {
-      margin-left: 8px;
-  }
-
-  .btn-new {
-      padding: 4px;
-      margin-top: 8px;
-      margin-left: 8px;
+  .btn-group {
+      margin: 8px;
   }
