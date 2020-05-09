@@ -1,11 +1,12 @@
 .array-container {
     position: absolute;
     margin-left: 100px;
+    justify-content: center;
+    align-items: center;
     /* top: 100px; */
   }
 
   .array-bar {
-    width: 4px;
     display: inline-block;
     margin: 0 1px;
     color: transparent;
@@ -13,4 +14,9 @@
   
   .btn-group {
       margin: 8px;
+  }
+
+  .btnaction {
+    margin: 4px;
+    padding: 2px;
   }

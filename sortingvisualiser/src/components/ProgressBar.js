@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Progress, Button } from 'reactstrap';
+import { Progress } from 'reactstrap';
 
 class ProgressBar extends Component {
     
@@ -7,8 +7,12 @@ class ProgressBar extends Component {
     return (
       <div style={{
         marginBottom : '16px',
+        width : '350px',
+        position : 'relative'
      }}>
-         <Progress color="success" value={this.props.data} />
+         <Progress bar color="success" value={this.props.data}>
+           Bar Length
+         </Progress>
       </div>
     )
   }

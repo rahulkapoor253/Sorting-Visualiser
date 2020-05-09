@@ -21,8 +21,7 @@ super(props);
 this.state = {
     dataArray : [],
     percent : 0,
-    barCount : 200,
-    maxBarHeght : 450
+    maxBarHeght : 350,
 }
 
 }
@@ -31,7 +30,7 @@ increment = () => {
     const val = this.state.percent >= 100 ? 0 : this.state.percent + 25;
     this.setState(() => ({
       percent: val,
-      maxBarHeght : 450 + val*2,
+      maxBarHeght : 350 + val*2,
     }));
 
     //call random array generate
@@ -48,7 +47,7 @@ generateRandomNumber = () => {
 getRandomNumbers = () => {
    const arr = [];
 
-    for(let x=0;x<this.state.barCount;x++) {
+    for(let x=0;x<175;x++) {
         arr.push(this.generateRandomNumber());
    } 
 
@@ -180,18 +179,22 @@ render() {
     
     return (
         <div className="array-container">
-            
+
+       <div>     
         <ButtonGroup className="btn-group">
-            <Button onClick={this.handleVisualise} className="btn">Merge Sorting</Button>
-            <Button onClick={this.handleBubbleVisualise} className="btn btn-left">Bubble Sorting</Button>
-            <Button onClick={this.handleQuickVisualise} className="btn btn-left">Quick Sorting</Button>
-            <Button className="btn-new" onClick={this.getRandomNumbers}>Generate new array</Button>
+            <Button size="sm" onClick={this.handleVisualise} className="btn">Merge Sorting</Button>
+            <Button size="sm" onClick={this.handleBubbleVisualise} className="btn btn-left">Bubble Sorting</Button>
+            <Button size="sm" onClick={this.handleQuickVisualise} className="btn btn-left">Quick Sorting</Button>
+            <Button size="sm" className="btn-new" onClick={this.getRandomNumbers}>Generate new array</Button>
         </ButtonGroup>
-
-        <Button color="info" onClick={this.increment}>Array Bars</Button>
-
+       
+            <Button className="btnaction" size="sm" color="info" onClick={this.increment}>Length</Button>
+           
             <ProgressBar data={this.state.percent}/>
 
+            </div>
+
+        <div>
             {dataArray.map((val, idx) => (
                  <div
                  className="array-bar"
@@ -199,8 +202,11 @@ render() {
                  style={{
                    backgroundColor: PRIMARY_COLOR,
                    height: `${val}px`,
+                    width : `5px`
                 }}>{val}</div>
             ))}
+
+        </div>
             
         </div>
     )
